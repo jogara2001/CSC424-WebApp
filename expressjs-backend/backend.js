@@ -12,6 +12,9 @@ const port = 8000;
 
 app.use(cors());
 app.use(express.json());
+app.use(csrf());
+app.disable('x-powered-by');
+
 
 dotenv.config();
 process.env.TOKEN_SECRET;
@@ -35,7 +38,7 @@ app.post('/account/login', async (req, res) => {
     const user = await userServices.findUserByName(req.body.userId)
     console.log(user)
     if (user && (user.password == req.body.password)) {
-        res.status(200).send(user)
+        res.status(200).send({user: user})
     } else {
         res.status(400).end()
     }
@@ -62,7 +65,7 @@ app.post('/account/signup', async (req, res) => {
             token: generateAccessToken(userId),
         };
         const savedUser = await userServices.addUser(user);
-        if (savedUser) res.status(201).send(savedUser);
+        if (savedUser) res.status(201).send({user: savedUser});
         else res.status(500).end();
     }
 })
@@ -82,7 +85,7 @@ https
   });
 
 function isLongEnough(myString) {
-    return myString.length > 8
+    return typeof myString === "string"  && myString.length > 8
 }
 
 function containsUppercase(str) {

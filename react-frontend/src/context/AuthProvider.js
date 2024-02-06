@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
         userId: user,
         password: password
       })
-      const token = data.token
+      const token = data.user.token
       if(token) {
         document.cookie = `token=${token}`
         setToken(token);
