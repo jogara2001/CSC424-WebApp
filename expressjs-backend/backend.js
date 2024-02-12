@@ -1,19 +1,20 @@
-import express from "express";
-import cors from "cors";
-
-import https from "https"
-import userServices from "./models/user-services.js";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv"
-import fs from "fs"
-
+const express = require('express');
 const app = express();
+const cors = require('cors')
 const port = 8000;
+const dotenv = require("dotenv");
+const https = require("https");
+const fs = require("fs")
+const jwt = require('jsonwebtoken');
+
+const authRouter = require("./routes/oath");
+
+const requestRouter = require("./routes/request");
 
 app.use(cors());
 app.use(express.json());
-app.use(csrf());
-app.disable('x-powered-by');
+app.use("/oath", authRouter);
+app.use("/request", requestRouter);
 
 
 dotenv.config();

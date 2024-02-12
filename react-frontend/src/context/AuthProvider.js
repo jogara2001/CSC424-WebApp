@@ -1,6 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
+export const TOKEN_KEY = "google_token"
+export const INVALID_TOKEN = ""
 
 const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {

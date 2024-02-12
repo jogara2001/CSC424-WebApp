@@ -1,10 +1,16 @@
-import { useAuth } from "./context/AuthProvider";
+import { TOKEN_KEY } from "./context/AuthProvider";
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 
 export const Landing = () => {
   const [users, setUsers] = useState([])
 
+  const queryParameters = new URLSearchParams(window.location.search);
+  const google_token = queryParameters.get("token");
+  
+  if (google_token) localStorage.setItem(TOKEN_KEY, google_token);
+   
 
   const getUsers = async () => {
     const { data } = await axios.get('https://localhost:8000/users')
@@ -14,7 +20,6 @@ export const Landing = () => {
 
   useEffect(() => {
     getUsers()
-    console.log(users)
   }, [])
 
   return (
